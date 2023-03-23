@@ -10,6 +10,6 @@ namespace IaraProj.Domain.Entities
     {
         public Guid Id { get; set; }
         public string CnpjComprador { get; set; }
-        public virtual List<CotacaoItem> CotacaoItens { get; set; }
+        public virtual List<CotacaoItem> CotacaoItens { get; set; } = new();
     }
 }

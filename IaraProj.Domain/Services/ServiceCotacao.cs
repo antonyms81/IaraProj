@@ -20,6 +20,12 @@ namespace IaraProj.Domain.Services
         public async Task<int> Criar(Guid id, Cotacao cotacao)
         {
             cotacao.Id = id;
+
+            if (cotacao.CotacaoItens != null)
+            {
+                cotacao.CotacaoItens.ForEach(x => x.IdCotacao = id);
+            }
+
             return await _repositorio.Criar(cotacao);
         }
 
