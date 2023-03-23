@@ -11,6 +11,12 @@ namespace IaraProj.Domain.Entities
     {
         public Guid Id { get; set; }
         public string Descricao { get; set; }
+        public int NumeroItem { get; set; }
+        public float Preco { get; set; }
+        public int Quantidade { get; set; }
+        public string? Marca { get; set; }
+        public string? Unidade { get; set; }
+
         public Guid IdCotacao { get; set; }
         public virtual Cotacao Cotacao { get; set; }
 

@@ -28,13 +28,14 @@ namespace IaraProj.Infra.Data.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer("Server=(LocalDB)\\Local;Database=DbIara;Integrated Security=true;");
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS01;Database=DbIara;Integrated Security=true;encrypt=false;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Cotacao>(new CotacaoConfig().Configure);
+            modelBuilder.Entity<CotacaoItem>(new CotacaoItemConfig().Configure);
         }
     }
 }
