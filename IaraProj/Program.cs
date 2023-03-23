@@ -1,7 +1,22 @@
+using IaraProj.Domain.Repositories;
+using IaraProj.Domain.Services;
+using IaraProj.Infra.Data.Context;
+using IaraProj.Infra.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<IaraContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:DbIara"]);
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+});
+
+builder.Services.AddScoped(typeof(IBase<>), typeof(Base<>));
+builder.Services.AddScoped<IServiceCotacao, ServiceCotacao>();
 
 var app = builder.Build();
 
