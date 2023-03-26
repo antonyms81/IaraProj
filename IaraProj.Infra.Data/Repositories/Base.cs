@@ -50,6 +50,19 @@ namespace IaraProj.Infra.Data.Repositories
             }
         }
 
+        public virtual async Task<int> ExcluirItem(E entidade)
+        {
+            try
+            {
+                _contexto.Entry(entidade).State = EntityState.Deleted;
+                return await _contexto.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
         public virtual async Task<List<E>> BuscarTodos()
         {
             return await _contexto.Set<E>().ToListAsync();
@@ -68,6 +81,12 @@ namespace IaraProj.Infra.Data.Repositories
         public async Task<int> AtualizarItem(CotacaoItem cotacaoItem)
         {
             _contexto.Entry(cotacaoItem).State = EntityState.Modified;
+            return await _contexto.SaveChangesAsync();
+        }
+
+        public async Task<int> ExcluirItem(CotacaoItem cotacaoItem)
+        {
+            _contexto.Entry(cotacaoItem).State = EntityState.Deleted;
             return await _contexto.SaveChangesAsync();
         }
     }

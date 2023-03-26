@@ -12,6 +12,7 @@ namespace IaraProj.Domain.Services
         Task<int> Criar(Guid id, Cotacao cotacao);
         Task<int> Atualizar(Guid id, Cotacao cotacao);
         Task<int> AtualizarItem(Guid id, CotacaoItem cotacaoItem);
+        Task<int> ExcluirItem(Guid id, CotacaoItem cotacaoItem);
         Task<int> Excluir(Guid id);
         Task<List<Cotacao>> BuscarTodos();
         Task<Cotacao> BuscarPorId(Guid id);

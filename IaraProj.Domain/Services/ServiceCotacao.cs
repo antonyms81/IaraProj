@@ -46,6 +46,11 @@ namespace IaraProj.Domain.Services
             return await _repositorio.Excluir(id);
         }
 
+        public async Task<int> ExcluirItem(Guid id, CotacaoItem cotacaoItem)
+        {
+            return await _repositorio.ExcluirItem(cotacaoItem);
+        }
+
         public async Task<List<Cotacao>> BuscarTodos()
         {
             return await _repositorio.BuscarTodos();

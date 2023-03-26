@@ -132,11 +132,14 @@ namespace IaraProj.Controllers
 
             var _cotacaoItem = await _service.BuscarItem();
             var listaItem = _cotacaoItem.Where(x => x.IdCotacao == cotacao.Id).ToList();
+            cotacao.CotacaoItens = listaItem;
             if (listaItem.Count() > 0)
             {
                 foreach (var item in listaItem)
                 {
-                    //var result = await _service.ExcluirItem(item.Id);
+                   
+                    var _linhasAfetadas = await _service.ExcluirItem(item.Id, cotacao.CotacaoItens[0]);
+
                 }
             }
 
