@@ -1,4 +1,5 @@
-﻿using IaraProj.Domain.Repositories;
+﻿using IaraProj.Domain.Entities;
+using IaraProj.Domain.Repositories;
 using IaraProj.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -30,6 +31,12 @@ namespace IaraProj.Infra.Data.Repositories
             return await _contexto.SaveChangesAsync();
         }
 
+        public virtual async Task<int> AtualizarItem(E entidade)
+        {
+            _contexto.Entry(entidade).State = EntityState.Modified;
+            return await _contexto.SaveChangesAsync();
+        }
+
         public virtual async Task<int> Excluir(Guid id)
         {
             try
@@ -51,6 +58,17 @@ namespace IaraProj.Infra.Data.Repositories
         public virtual async Task<E> BuscarPeloId(Guid id)
         {
             return await _contexto.Set<E>().FindAsync(id);
+        }
+
+        public virtual async Task<List<CotacaoItem>> BuscarItem()
+        {
+            return await _contexto.Set<CotacaoItem>().ToListAsync();
+        }
+
+        public async Task<int> AtualizarItem(CotacaoItem cotacaoItem)
+        {
+            _contexto.Entry(cotacaoItem).State = EntityState.Modified;
+            return await _contexto.SaveChangesAsync();
         }
     }
 }

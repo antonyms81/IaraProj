@@ -35,6 +35,12 @@ namespace IaraProj.Domain.Services
             return await _repositorio.Atualizar(cotacao);
         }
 
+        public async Task<int> AtualizarItem(Guid id, CotacaoItem cotacaoItem)
+        {
+            cotacaoItem.Id = id;
+            return await _repositorio.AtualizarItem(cotacaoItem);
+        }
+
         public async Task<int> Excluir(Guid id)
         {
             return await _repositorio.Excluir(id);
@@ -48,6 +54,11 @@ namespace IaraProj.Domain.Services
         public async Task<Cotacao> BuscarPorId(Guid id)
         {
             return await _repositorio.BuscarPeloId(id);
+        }
+
+        public async Task<List<CotacaoItem>> BuscarItem()
+        {
+            return await _repositorio.BuscarItem();
         }
     }
 }

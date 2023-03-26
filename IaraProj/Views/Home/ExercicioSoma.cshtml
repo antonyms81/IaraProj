@@ -1,6 +1,6 @@
 ﻿@model IaraProj.Domain.Entities.ExercicioSoma
 @{
-    ViewData["Title"] = "Cotação";
+    ViewData["Title"] = "Soma";
 }
 
 
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row">
-        @if (Model.Soma != 0)
+        @if (Model?.Soma != 0 && Model != null)
         {
             <div class="col-md-5">
                 <div>

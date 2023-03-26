@@ -1,0 +1,31 @@
+﻿@model IaraProj.Domain.Entities.Duplicadas
+@{
+    ViewData["Title"] = "Letras Duplicadas";
+}
+
+<form asp-action="Duplicadas">
+
+    <h1>Exercicio Remover Letras Duplicadas</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <label asp-for="ValorEntrada" class="form-label"></label>
+            <input asp-for="ValorEntrada" class="form-control" id="Entrada" name="Entrada" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            Saída Convertida
+            <input asp-for="ValorSaida" class="form-control" name="Saida" disabled="">
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div style="padding-top:20px;">
+                <button type="button" onclick="subString()" name="TipoAcao" value="Converter" class="btn btn-primary">Remover Duplicado</button>
+            </div>
+        </div>
+    </div>
+    <script src="@Url.Content("~/js/duplicadas.js")" type="text/javascript"></script>
+</form>

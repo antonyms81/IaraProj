@@ -60,15 +60,18 @@ namespace IaraProj.Controllers
 
         public async Task<IActionResult> Editar(Guid id)
         {
+            Cotacao cotacao = new Cotacao();
             if (id != Guid.Empty)
             {
-                var result = await _service.BuscarPorId(id);
-                if (result != null)
-                {
-                    return View(result);
-                }
+                var _cotacao = await _service.BuscarPorId(id);
+                var _cotacaoItem = await _service.BuscarItem();
+                var listaItem = _cotacaoItem.Where(x => x.IdCotacao == id).ToList();
+
+                cotacao = _cotacao;
+                cotacao.CotacaoItens = listaItem.ToList();
+
             }
-            return View();
+            return View(cotacao);
         }
 
         [HttpPost]
@@ -80,12 +83,25 @@ namespace IaraProj.Controllers
             cotacao.CnpjComprador = cnpjComprador;
             cotacao.CNPJFornecedor = cnpjfornecedor;
 
-            if (Request.Form["TipoAcao"] == "AdicionarItem")
-                cotacao.CotacaoItens.Add(new CotacaoItem { Id = Guid.NewGuid(), Ordem = cotacao.CotacaoItens.Count });
-
             if (Request.Form["TipoAcao"] == "Editar")
             {
+
+
+                var _cotacaoItem = await _service.BuscarItem();
+                var listaItem = _cotacaoItem.Where(x => x.IdCotacao == cotacao.Id).ToList();
+                foreach(var itemCont in listaItem)
+                {
+                    foreach (var item in cotacao.CotacaoItens)
+                    {
+                        cotacao.CotacaoItens.First().Id = itemCont.Id;
+                        cotacao.CotacaoItens.First().IdCotacao = itemCont.IdCotacao;
+                        var _linhasAfetadas = await _service.AtualizarItem(itemCont.Id, cotacao.CotacaoItens.First());
+                    }
+                }
+                
+                
                 var linhasAfetadas = await _service.Atualizar(cotacao.Id, cotacao);
+               
                 if (linhasAfetadas > 0)
                 {
                     return RedirectToAction(nameof(Index));
@@ -132,7 +148,7 @@ namespace IaraProj.Controllers
         [HttpPost]
         public async Task<IActionResult> ExercicioSoma(ExercicioSoma exercicioSoma)
         {
-           
+
             if (exercicioSoma.ValorEntrada != 0)
             {
                 for (int i = 0; i <= exercicioSoma.ValorEntrada; i++)
@@ -140,12 +156,21 @@ namespace IaraProj.Controllers
                     exercicioSoma.Soma = i + exercicioSoma.Soma;
                 }
             }
+            else
+            {
+                exercicioSoma.ValorEntrada = 0;
+                exercicioSoma.Soma = 0;
+            }
 
             return View(exercicioSoma);
         }
 
+        public IActionResult Duplicadas()
+        {
+            return View();
+        }
 
-
+     
         public IActionResult Privacy()
         {
             return View();
