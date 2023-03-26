@@ -1,0 +1,85 @@
+﻿@model IaraProj.Domain.Entities.ListaCotacao
+@{
+    ViewData["Title"] = "Cotação";
+}
+
+
+
+<form asp-action="Vendas">
+
+    @* <div class="row">
+
+        <div class="col-md-2">
+        <label asp-for="CnpjComprador" class="form-label"></label>
+        <input asp-for="CnpjComprador" class="form-control" required>
+        </div>
+
+        <div class="col-md-2">
+        <label asp-for="CNPJFornecedor" class="form-label"></label>
+        <input asp-for="CNPJFornecedor" class="form-control" required>
+        </div>
+
+        <div class="col-md-2">
+        <label asp-for="NumeroCotacao" class="form-label"></label>
+        <input asp-for="NumeroCotacao" class="form-control" required>
+        </div>
+
+        <div class="col-md-3">
+        <label asp-for="DataCotacao" class="form-label"></label>
+        <input asp-for="DataCotacao" class="form-control" required>
+        </div>
+
+        <div class="col-md-3">
+        <label asp-for="DataEntregaCotacao" class="form-label"></label>
+        <input asp-for="DataEntregaCotacao" class="form-control" required>
+        </div>
+
+        </div>*@
+    <h2>Cotações Encontradas</h2>
+
+    <div style="padding-top:20px">
+        <table width="100%" id="tabCotacoes">
+            <tr>
+                <td>NUMERO COTAÇÃO</td>
+                <td>CNPJ COMPRADOR</td>
+                <td>CNPJ FORNECEDOR</td>
+                <td>DATA COTAÇÃO</td>
+                <td>DATA ENTREGA COTAÇÃO</td>
+                <td>AÇÕES</td>
+            </tr>
+            @if (Model.Cotacoes != null)
+            {
+                foreach (var item in Model.Cotacoes)
+                {
+                    <tr>
+                        <td>@item.NumeroCotacao</td>
+                        <td>@item.CnpjComprador</td>
+                        <td>@item.CNPJFornecedor</td>
+                        <td>@item.DataCotacao.ToString("dd/MM/yyyy")</td>
+                        <td>@item.DataEntregaCotacao.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @Html.ActionLink("Editar", "Editar", "Home", new { ID = item.Id }, new { })
+                             <span>| </span>
+                            @Html.ActionLink("Excluir", "Deletar", "Home", new { ID = item.Id }, new { })
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <div style="text-align: center">
+                    <h3>NENHUMA VENDAS ENCONTRADAS</h3>
+                </div>
+
+            }
+        </table>
+
+    </div>
+
+
+
+
+</form>
+
+
