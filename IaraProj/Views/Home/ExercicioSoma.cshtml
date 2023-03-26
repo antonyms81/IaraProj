@@ -1,0 +1,52 @@
+﻿@model IaraProj.Domain.Entities.ExercicioSoma
+@{
+    ViewData["Title"] = "Cotação";
+}
+
+
+
+<form asp-action="ExercicioSoma">
+
+    <h1>Exercicio Soma</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <label asp-for="ValorEntrada" class="form-label"></label>
+            <input asp-for="ValorEntrada" class="form-control" required>
+        </div>
+    </div>
+    <div class="row">
+        @if (Model.Soma != 0)
+        {
+            <div class="col-md-5">
+                <div>
+                    Soma(@Model.ValorEntrada) -> @Model.Soma (
+                    @for (int i = 1; i <= Model.ValorEntrada; i++)
+                    {
+                       int res = i;
+                        if(res < @Model.ValorEntrada)
+                        {
+                            <span> @res + </span>
+                        }
+                        else
+                        {
+                            <span> @res</span>
+                        }
+                    }
+                )</div>
+
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div style="padding-top:20px;">
+                <button type="submit" name="TipoAcao" value="Somar" class="btn btn-primary">Somar</button>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+

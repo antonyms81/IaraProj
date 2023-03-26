@@ -124,6 +124,28 @@ namespace IaraProj.Controllers
             return View();
         }
 
+        public IActionResult ExercicioSoma()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ExercicioSoma(ExercicioSoma exercicioSoma)
+        {
+           
+            if (exercicioSoma.ValorEntrada != 0)
+            {
+                for (int i = 0; i <= exercicioSoma.ValorEntrada; i++)
+                {
+                    exercicioSoma.Soma = i + exercicioSoma.Soma;
+                }
+            }
+
+            return View(exercicioSoma);
+        }
+
+
+
         public IActionResult Privacy()
         {
             return View();
