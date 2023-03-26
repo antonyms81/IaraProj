@@ -19,6 +19,7 @@ namespace IaraProj.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
@@ -39,10 +40,10 @@ namespace IaraProj.Controllers
                 var linhasAfetadas = await _service.Criar(Guid.NewGuid(), cotacao);
                 if (linhasAfetadas > 0)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Cotacao));
                 }
 
-                
+
             }
             return View(cotacao);
         }
@@ -53,7 +54,7 @@ namespace IaraProj.Controllers
 
             var result = await _service.BuscarTodos();
 
-            listaCotacao.Cotacoes = result; 
+            listaCotacao.Cotacoes = result;
 
             return View(listaCotacao);
         }
@@ -85,26 +86,25 @@ namespace IaraProj.Controllers
 
             if (Request.Form["TipoAcao"] == "Editar")
             {
-
-
                 var _cotacaoItem = await _service.BuscarItem();
                 var listaItem = _cotacaoItem.Where(x => x.IdCotacao == cotacao.Id).ToList();
-                foreach(var itemCont in listaItem)
-                {
-                    foreach (var item in cotacao.CotacaoItens)
+
+                int cont = 0;
+              
+                foreach (var item in listaItem)
                     {
-                        cotacao.CotacaoItens.First().Id = itemCont.Id;
-                        cotacao.CotacaoItens.First().IdCotacao = itemCont.IdCotacao;
-                        var _linhasAfetadas = await _service.AtualizarItem(itemCont.Id, cotacao.CotacaoItens.First());
-                    }
+
+                    cotacao.CotacaoItens[cont].Id=item.Id;
+                    cotacao.CotacaoItens[cont].IdCotacao=item.IdCotacao;
+                    var _linhasAfetadas = await _service.AtualizarItem(item.Id, cotacao.CotacaoItens[cont]);
+                    cont++;
                 }
                 
-                
                 var linhasAfetadas = await _service.Atualizar(cotacao.Id, cotacao);
-               
+
                 if (linhasAfetadas > 0)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Cotacao));
                 }
 
 
@@ -130,11 +130,21 @@ namespace IaraProj.Controllers
         public async Task<IActionResult> Deletar(Cotacao cotacao)
         {
 
+            var _cotacaoItem = await _service.BuscarItem();
+            var listaItem = _cotacaoItem.Where(x => x.IdCotacao == cotacao.Id).ToList();
+            if (listaItem.Count() > 0)
+            {
+                foreach (var item in listaItem)
+                {
+                    //var result = await _service.ExcluirItem(item.Id);
+                }
+            }
+
             var linhasAfetadas = await _service.Excluir(cotacao.Id);
 
             if (linhasAfetadas > 0)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Cotacao));
             }
 
             return View();
@@ -170,7 +180,7 @@ namespace IaraProj.Controllers
             return View();
         }
 
-     
+
         public IActionResult Privacy()
         {
             return View();
